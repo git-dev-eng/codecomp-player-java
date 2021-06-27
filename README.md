@@ -108,6 +108,9 @@ We have written all boilerplate code to get you started within 5 minutes. You ku
   
 ## Checking Logs
   - Go to App Engine > Services and click on Tools in your deployed service and select Logs which will open the logs of application.
+  
+  - In case if you see the new logs explorer switch to legacy logs viewer by going to OPTIONS> Go Back to the Legacy Logs Viewer
+![New Logs Explorer](/img/switch-logs-explorer.JPG)  
   - You can click on Play button on top to start streaming live logs.
 
 ![Logs](/img/logs.JPG)  
