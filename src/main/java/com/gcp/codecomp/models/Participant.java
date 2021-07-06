@@ -1,5 +1,7 @@
 package com.gcp.codecomp.models;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
@@ -8,8 +10,10 @@ public class Participant {
 	String teamId;
 	Long currentScore;
 	Long totalScore;
+	List<String> killedBy;
 	Boolean isAlive;
 	Boolean isRobot;
+	
 	public String getTeamId() {
 		return teamId;
 	}
@@ -28,6 +32,12 @@ public class Participant {
 	public void setTotalScore(Long totalScore) {
 		this.totalScore = totalScore;
 	}
+	public List<String> getKilledBy() {
+		return killedBy;
+	}
+	public void setKilledBy(List<String> killedBy) {
+		this.killedBy = killedBy;
+	}
 	public Boolean getIsAlive() {
 		return isAlive;
 	}
@@ -43,8 +53,9 @@ public class Participant {
 	@Override
 	public String toString() {
 		return "Participant [teamId=" + teamId + ", currentScore=" + currentScore + ", totalScore=" + totalScore
-				+ ", isAlive=" + isAlive + ", isRobot=" + isRobot + "]";
+				+ ", killedBy=" + killedBy + ", isAlive=" + isAlive + ", isRobot=" + isRobot + "]";
 	}
+	
 	
 	
 	

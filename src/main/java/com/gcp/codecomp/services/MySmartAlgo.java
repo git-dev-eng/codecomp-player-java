@@ -34,7 +34,7 @@ public class MySmartAlgo {
 		
 		Map<String, Participant> participantsMap = gameParameters.getParticipants().stream().collect(Collectors.toMap(Participant::getTeamId, Participant -> Participant));;
 		
-		//Remove myself, I don't want to guess my secret and lose one chance(out of 5) to score points . Do I? :)
+		//Remove myself, I don't want to guess my secret and lose one chance(out of 5) in a single request to score points . Do I? :)
 		if(participantsMap.containsKey(env.getProperty("team")))
 			participantsMap.remove(env.getProperty("team"));
 		
@@ -45,17 +45,25 @@ public class MySmartAlgo {
 			
 			long randomGuess = Math.round(r.nextFloat() * Math.pow(10,gameParameters.getSecretLength()));
 			
-			if(	participantsMap != null && keysAsArray.size() > 0 && 
-					participantsMap.get(keysAsArray.get(r.nextInt(keysAsArray.size()))) != null && 
-					participantsMap.get(keysAsArray.get(r.nextInt(keysAsArray.size()))).getIsAlive()
-				)
+			// Check if there are other participants joined
+			if(participantsMap != null && keysAsArray.size() > 0 )
 			{
+				int index = r.nextInt(keysAsArray.size());
 				
-				Guess guess = new Guess();
-				guess.setTeam(keysAsArray.get(r.nextInt(keysAsArray.size())));
-				guess.setGuess(Long.toString(randomGuess));
-				guesses.add(guess);
+				Participant p = participantsMap.get(keysAsArray.get(index));
 				
+			
+				// I only guess for teams who are alive and for those whose 
+				// secret I haven't cracked yet. Am I already not smart? Everyone says I am a dumb bot. :(
+				// Help me to prove them wrong. Make me smarter.	
+				if( p != null &&  p.getIsAlive() && ( p.getKilledBy() == null || !p.getKilledBy().contains(env.getProperty("team")) ) )
+				{
+					Guess guess = new Guess();
+					guess.setTeam(keysAsArray.get(index));
+					guess.setGuess(Long.toString(randomGuess));
+					guesses.add(guess);
+				}
+					
 			}
 			
 		}
